@@ -53,9 +53,9 @@
             label5.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
             label5.Location = new Point(293, 382);
             label5.Name = "label5";
-            label5.Size = new Size(125, 21);
+            label5.Size = new Size(87, 21);
             label5.TabIndex = 15;
-            label5.Text = "Esc/Ctrl + Q: Exit";
+            label5.Text = "Alt + L: Exit";
             // 
             // label4
             // 

@@ -16,6 +16,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.Xml.Linq;
 using System;
+using OfficeOpenXml;
 
 namespace MasterFile
 {
@@ -24,6 +25,16 @@ namespace MasterFile
         public GeneralForm()
         {
             InitializeComponent();
+
+            //ExcelPackage.LicenseContext = LicenseContext.NonCommercial; // EPPlus Nuget
+            //var file = new FileInfo(@"C:\Users\30042104\Source\Repos\MasterFile.csv");
+            //// read
+            //List<string> staffFromExcel = LoadExcelFile(file);
+
+            //foreach (var p in staffFromExcel)
+            //{
+            //    Console.WriteLine(p);
+            //}
         }
 
         //Q4.1.Create a Dictionary data structure with a TKey of type integer
@@ -31,7 +42,34 @@ namespace MasterFile
         public static Dictionary<int, string> MasterFile = new Dictionary<int, string>();
 
         //Q4.2.Create a method that will read the data from the.csv file into the Dictionary data structure when the GUI loads.
+        //private static  List<string> LoadExcelFile(FileInfo file)
+        //{          
+        //List<string> output = new();
 
+
+        //using var package = new ExcelPackage(file);
+
+        //// need to check if the file exists, before loading
+        //if (file.Exists)
+        //{
+        //    package.LoadAsync(file);
+
+        //    var ws = package.Workbook.Worksheets[0];
+
+        //    int row = 1;
+        //    int col = 1;
+
+        //    while (string.IsNullOrWhiteSpace(ws.Cells[row, col].Value?.ToString()) == false)
+        //    {
+        //        string staff = "";
+        //        int id = int.Parse(ws.Cells[row, col].Value.ToString());
+        //        string name = ws.Cells[row, col + 1].Value.ToString();
+        //        output.Add($"{id} {name}");
+        //        row += 1; // if missing -> infinite loop!
+        //    }
+        //}
+        //return output;
+        //}
         //Q4.3.Create a method to display the Dictionary data into a non-selectable display only list box (ie read only).
 
         //Q4.4.Create a method to filter the Staff Name data from the Dictionary into a second filtered and selectable list box.
