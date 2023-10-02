@@ -25,16 +25,13 @@ namespace MasterFile
         public GeneralForm()
         {
             InitializeComponent();
+            DiaplaylbAllStaff();
 
-            //ExcelPackage.LicenseContext = LicenseContext.NonCommercial; // EPPlus Nuget
-            //var file = new FileInfo(@"C:\Users\30042104\Source\Repos\MasterFile.csv");
-            //// read
-            //List<string> staffFromExcel = LoadExcelFile(file);
-
-            //foreach (var p in staffFromExcel)
-            //{
-            //    Console.WriteLine(p);
-            //}
+            ExcelPackage.LicenseContext = LicenseContext.NonCommercial; // EPPlus Nuget
+            var file = new FileInfo(@"C:\Users\30042104\Source\Repos\MasterFile\asd.xlsx");
+            // Load data
+            LoadExcelFile(file);
+            DiaplaylbAllStaff();
         }
 
         //Q4.1.Create a Dictionary data structure with a TKey of type integer
@@ -42,35 +39,43 @@ namespace MasterFile
         public static Dictionary<int, string> MasterFile = new Dictionary<int, string>();
 
         //Q4.2.Create a method that will read the data from the.csv file into the Dictionary data structure when the GUI loads.
-        //private static  List<string> LoadExcelFile(FileInfo file)
-        //{          
-        //List<string> output = new();
+        private static void LoadExcelFile(FileInfo file)
+        {
+            using var package = new ExcelPackage(file);
 
+            // need to check if the file exists, before loading
+            if (file.Exists)
+            {
+                package.LoadAsync(file);
 
-        //using var package = new ExcelPackage(file);
+                var ws = package.Workbook.Worksheets[0];
 
-        //// need to check if the file exists, before loading
-        //if (file.Exists)
-        //{
-        //    package.LoadAsync(file);
+                int row = 1;
+                int col = 1;
 
-        //    var ws = package.Workbook.Worksheets[0];
-
-        //    int row = 1;
-        //    int col = 1;
-
-        //    while (string.IsNullOrWhiteSpace(ws.Cells[row, col].Value?.ToString()) == false)
-        //    {
-        //        string staff = "";
-        //        int id = int.Parse(ws.Cells[row, col].Value.ToString());
-        //        string name = ws.Cells[row, col + 1].Value.ToString();
-        //        output.Add($"{id} {name}");
-        //        row += 1; // if missing -> infinite loop!
-        //    }
-        //}
-        //return output;
-        //}
+                while (string.IsNullOrWhiteSpace(ws.Cells[row, col].Value?.ToString()) == false)
+                {                    
+                    int id = int.Parse(ws.Cells[row, col].Value.ToString());
+                    string name = ws.Cells[row, col + 1].Value.ToString();
+                    MasterFile.Add(id, name);
+                    row += 1; // if missing -> infinite loop!
+                }
+            }
+            else
+            {
+                MessageBox.Show("file not found");
+            }
+        }
         //Q4.3.Create a method to display the Dictionary data into a non-selectable display only list box (ie read only).
+        private void DiaplaylbAllStaff()
+        {
+            lbAllStaff.Items.Clear();
+
+            foreach (var staff in MasterFile)
+            {
+                lbAllStaff.Items.Add(staff);
+            }
+        }
 
         //Q4.4.Create a method to filter the Staff Name data from the Dictionary into a second filtered and selectable list box.
         //This method must use a text box input and update as each character is entered.The list box must reflect the filtered data in real time.
