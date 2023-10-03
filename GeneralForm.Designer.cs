@@ -74,8 +74,9 @@
             txtStaffName.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
             txtStaffName.Location = new Point(303, 213);
             txtStaffName.Name = "txtStaffName";
-            txtStaffName.Size = new Size(175, 29);
+            txtStaffName.Size = new Size(162, 29);
             txtStaffName.TabIndex = 24;
+            txtStaffName.TextChanged += txtStaffName_TextChanged;
             // 
             // label2
             // 
@@ -92,8 +93,10 @@
             txtStaffID.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
             txtStaffID.Location = new Point(303, 111);
             txtStaffID.Name = "txtStaffID";
-            txtStaffID.Size = new Size(175, 29);
+            txtStaffID.Size = new Size(162, 29);
             txtStaffID.TabIndex = 22;
+            txtStaffID.TextChanged += txtStaffID_TextChanged;
+            txtStaffID.KeyPress += txtStaffID_KeyPress;
             // 
             // label1
             // 
@@ -110,9 +113,9 @@
             lbAllStaff.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
             lbAllStaff.FormattingEnabled = true;
             lbAllStaff.ItemHeight = 21;
-            lbAllStaff.Location = new Point(51, 34);
+            lbAllStaff.Location = new Point(12, 34);
             lbAllStaff.Name = "lbAllStaff";
-            lbAllStaff.Size = new Size(196, 382);
+            lbAllStaff.Size = new Size(270, 382);
             lbAllStaff.TabIndex = 20;
             // 
             // lbFilteredData
@@ -120,9 +123,9 @@
             lbFilteredData.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
             lbFilteredData.FormattingEnabled = true;
             lbFilteredData.ItemHeight = 21;
-            lbFilteredData.Location = new Point(565, 34);
+            lbFilteredData.Location = new Point(484, 34);
             lbFilteredData.Name = "lbFilteredData";
-            lbFilteredData.Size = new Size(196, 382);
+            lbFilteredData.Size = new Size(304, 382);
             lbFilteredData.TabIndex = 20;
             // 
             // GeneralForm

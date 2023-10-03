@@ -1,6 +1,3 @@
-// Name: Dongyun Huang
-// ID: 30042104
-// Date: 2/10/2023 - 
 using Microsoft.VisualBasic.ApplicationServices;
 using Microsoft.VisualBasic.Devices;
 using Microsoft.VisualBasic.Logging;
@@ -16,8 +13,11 @@ using System.Text;
 using System.Windows.Forms;
 using System.Xml.Linq;
 using System;
-using OfficeOpenXml;
+using System.Linq;
 
+// Name: Dongyun Huang
+// ID: 30042104
+// Date: 2/10/2023 - 
 namespace MasterFile
 {
     public partial class GeneralForm : Form
@@ -25,13 +25,8 @@ namespace MasterFile
         public GeneralForm()
         {
             InitializeComponent();
-            DiaplaylbAllStaff();
-
-            ExcelPackage.LicenseContext = LicenseContext.NonCommercial; // EPPlus Nuget
-            var file = new FileInfo(@"C:\Users\30042104\Source\Repos\MasterFile\asd.xlsx");
             // Load data
-            LoadExcelFile(file);
-            DiaplaylbAllStaff();
+            LoadExcelFile();
         }
 
         //Q4.1.Create a Dictionary data structure with a TKey of type integer
@@ -39,33 +34,21 @@ namespace MasterFile
         public static Dictionary<int, string> MasterFile = new Dictionary<int, string>();
 
         //Q4.2.Create a method that will read the data from the.csv file into the Dictionary data structure when the GUI loads.
-        private static void LoadExcelFile(FileInfo file)
+        private void LoadExcelFile()
         {
-            using var package = new ExcelPackage(file);
-
-            // need to check if the file exists, before loading
-            if (file.Exists)
+            //MasterFile.Clear();
+            using (var reader = new StreamReader("MalinStaffNamesV2.csv"))
             {
-                package.LoadAsync(file);
-
-                var ws = package.Workbook.Worksheets[0];
-
-                int row = 1;
-                int col = 1;
-
-                while (string.IsNullOrWhiteSpace(ws.Cells[row, col].Value?.ToString()) == false)
-                {                    
-                    int id = int.Parse(ws.Cells[row, col].Value.ToString());
-                    string name = ws.Cells[row, col + 1].Value.ToString();
-                    MasterFile.Add(id, name);
-                    row += 1; // if missing -> infinite loop!
+                string line;
+                while ((line = reader.ReadLine()) != null)
+                {
+                    string[] keyValue = line.Split(',');
+                    MasterFile.Add(int.Parse(keyValue[0]), keyValue[1]);
                 }
             }
-            else
-            {
-                MessageBox.Show("file not found");
-            }
+            DiaplaylbAllStaff();
         }
+
         //Q4.3.Create a method to display the Dictionary data into a non-selectable display only list box (ie read only).
         private void DiaplaylbAllStaff()
         {
@@ -79,10 +62,49 @@ namespace MasterFile
 
         //Q4.4.Create a method to filter the Staff Name data from the Dictionary into a second filtered and selectable list box.
         //This method must use a text box input and update as each character is entered.The list box must reflect the filtered data in real time.
+        private void txtStaffName_TextChanged(object sender, EventArgs e)
+        {
+            lbFilteredData.Items.Clear();
+
+            string filterText = txtStaffName.Text.ToLower(); // Convert filter text to lowercase
+
+            foreach (var staff in MasterFile)
+            {
+                int id = staff.Key;
+                string name = staff.Value;
+
+                if (name.ToLower().Contains(filterText))
+                {
+                    lbFilteredData.Items.Add($"[{id}, {name}]");
+                }
+            }
+        }
 
         //Q4.5.Create a method to filter the Staff ID data from the Dictionary into the second filtered and selectable list box.
         //This method must use a text box input and update as each number is entered.The list box must reflect the filtered data in real time.
+        private void txtStaffID_TextChanged(object sender, EventArgs e)
+        {
+            lbFilteredData.Items.Clear();
 
+            foreach (var staff in MasterFile)
+            {
+                int id = staff.Key;
+                string name = staff.Value;
+
+                if (id.ToString().Contains(txtStaffID.Text))
+                {
+                    lbFilteredData.Items.Add($"[{id}, {name}]");
+                }
+            }
+        }
+        // If it's not a digit & control key, supress the key press.
+        private void txtStaffID_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar))
+            {                
+                e.Handled = true;
+            }
+        }
 
         //Q4.6.Create a method for the Staff Name text box which will clear the contents and place the focus into the Staff Name text box. Utilise a keyboard shortcut.
 
