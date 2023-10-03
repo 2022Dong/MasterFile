@@ -17,7 +17,7 @@ using System.Linq;
 
 // Name: Dongyun Huang
 // ID: 30042104
-// Date: 2/10/2023 - 
+// Date: 2/10/2023 - 27/11/2023
 namespace MasterFile
 {
     public partial class GeneralForm : Form
@@ -101,16 +101,30 @@ namespace MasterFile
         private void txtStaffID_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (!char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar))
-            {                
+            {
                 e.Handled = true;
             }
         }
 
         //Q4.6.Create a method for the Staff Name text box which will clear the contents and place the focus into the Staff Name text box. Utilise a keyboard shortcut.
-
+        private void txtStaffName_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.C && e.Control)
+            {
+                txtStaffName.Clear();
+                txtStaffName.Focus();
+            }
+        }
 
         //Q4.7.Create a method for the Staff ID text box which will clear the contents and place the focus into the text box. Utilise a keyboard shortcut.
-
+        private void txtStaffID_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.C && e.Control)
+            {
+                txtStaffID.Clear();
+                txtStaffID.Focus();
+            }
+        }
 
         //Q4.8.Create a method for the filtered and selectable list box which will populate the two text boxes when a staff record is selected.Utilise the Tab and keyboard keys.
 

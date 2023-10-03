@@ -77,6 +77,7 @@
             txtStaffName.Size = new Size(162, 29);
             txtStaffName.TabIndex = 24;
             txtStaffName.TextChanged += txtStaffName_TextChanged;
+            txtStaffName.KeyDown += txtStaffName_KeyDown;
             // 
             // label2
             // 
@@ -96,6 +97,7 @@
             txtStaffID.Size = new Size(162, 29);
             txtStaffID.TabIndex = 22;
             txtStaffID.TextChanged += txtStaffID_TextChanged;
+            txtStaffID.KeyDown += txtStaffID_KeyDown;
             txtStaffID.KeyPress += txtStaffID_KeyPress;
             // 
             // label1
