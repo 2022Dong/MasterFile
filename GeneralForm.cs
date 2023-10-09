@@ -174,7 +174,30 @@ namespace MasterFile
         //Ensure the General GUI sends the currently selected Staff ID and Staff Name to the Admin GUI for Update and Delete purposes and is opened as modal.
         //Create modified logic to open the Admin GUI to Create a new user when the Staff ID 77 and the Staff Name is empty.
         //Read the appropriate criteria in the Admin GUI for further information.
+        private void GeneralForm_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.A && e.Alt) // KeyPreview needs to be true.
+            {
+                string selectedStaffID = txtStaffID.Text;
+                string selectedStaffName = txtStaffName.Text;
 
+                // pass data to admin form
+                AdminForm adminGUI = new AdminForm(selectedStaffID, selectedStaffName);
+
+                // open as a modal
+                //adminGUI.Show();
+                DialogResult result = adminGUI.ShowDialog();
+
+                // Handle the result if needed (e.g., refresh data after editing).
+                if (result == DialogResult.OK)
+                {
+                    // Reload or update data in the General GUI.
+                    DiaplaylbAllStaff();
+                    txtStaffID.Clear();
+                    txtStaffName.Clear();
+                }
+            }
+        }
 
         //Q4.10.Add suitable error trapping and user feedback via a status strip or similar to ensure a fully functional User Experience.
         //Make all methods private and ensure the Dictionary is static and public.

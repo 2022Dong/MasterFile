@@ -18,9 +18,13 @@ namespace MasterFile
 {
     public partial class AdminForm : Form
     {
-        public AdminForm()
+        public AdminForm(string id, string name)
         {
             InitializeComponent();
+
+            // populate data from general form
+            txtStaffID.Text = id;
+            txtStaffName.Text = name;
         }
         //Q5.1.Create the Admin GUI with the following settings: GUI is model, all Control Box features are removed/hidden,
         //then add two text boxes.The text box for the Staff ID should be read-only for Add, Update and Delete purposes.

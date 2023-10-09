@@ -63,7 +63,7 @@
             label4.Name = "label4";
             label4.Size = new Size(152, 21);
             label4.TabIndex = 26;
-            label4.Text = "Atl + A: Admin Form";
+            label4.Text = "Alt + A: Admin Form";
             // 
             // label3
             // 
@@ -145,7 +145,7 @@
             label6.Name = "label6";
             label6.Size = new Size(149, 21);
             label6.TabIndex = 28;
-            label6.Text = "Atl + I: Clear Staff ID";
+            label6.Text = "Alt + I: Clear Staff ID";
             // 
             // label7
             // 
@@ -155,7 +155,7 @@
             label7.Name = "label7";
             label7.Size = new Size(184, 21);
             label7.TabIndex = 29;
-            label7.Text = "Atl + N: Clear Staff Name";
+            label7.Text = "Alt + N: Clear Staff Name";
             // 
             // label8
             // 
@@ -200,8 +200,11 @@
             Controls.Add(label1);
             Controls.Add(lbFilteredData);
             Controls.Add(lbAllStaff);
+            KeyPreview = true;
             Name = "GeneralForm";
-            Text = "Form1";
+            StartPosition = FormStartPosition.CenterScreen;
+            Text = "General";
+            KeyDown += GeneralForm_KeyDown;
             statusStrip1.ResumeLayout(false);
             statusStrip1.PerformLayout();
             ResumeLayout(false);
