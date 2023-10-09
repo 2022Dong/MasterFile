@@ -41,7 +41,7 @@
             label7 = new Label();
             label8 = new Label();
             statusStrip1 = new StatusStrip();
-            toolStripStatusLabel1 = new ToolStripStatusLabel();
+            stsMsg = new ToolStripStatusLabel();
             statusStrip1.SuspendLayout();
             SuspendLayout();
             // 
@@ -169,18 +169,18 @@
             // 
             // statusStrip1
             // 
-            statusStrip1.Items.AddRange(new ToolStripItem[] { toolStripStatusLabel1 });
+            statusStrip1.Items.AddRange(new ToolStripItem[] { stsMsg });
             statusStrip1.Location = new Point(0, 428);
             statusStrip1.Name = "statusStrip1";
             statusStrip1.Size = new Size(800, 22);
             statusStrip1.TabIndex = 31;
             statusStrip1.Text = "statusStrip1";
             // 
-            // toolStripStatusLabel1
+            // stsMsg
             // 
-            toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            toolStripStatusLabel1.Size = new Size(87, 17);
-            toolStripStatusLabel1.Text = "Feedback info: ";
+            stsMsg.Name = "stsMsg";
+            stsMsg.Size = new Size(87, 17);
+            stsMsg.Text = "Feedback info: ";
             // 
             // GeneralForm
             // 
@@ -225,6 +225,6 @@
         private Label label7;
         private Label label8;
         private StatusStrip statusStrip1;
-        private ToolStripStatusLabel toolStripStatusLabel1;
+        private ToolStripStatusLabel stsMsg;
     }
 }

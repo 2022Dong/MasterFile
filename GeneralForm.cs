@@ -182,7 +182,7 @@ namespace MasterFile
                 string selectedStaffName = txtStaffName.Text;
 
                 // pass data to admin form
-                AdminForm adminGUI = new AdminForm(selectedStaffID, selectedStaffName);
+                AdminForm adminGUI = new AdminForm(selectedStaffID, selectedStaffName, MasterFile);
 
                 // open as a modal
                 //adminGUI.Show();

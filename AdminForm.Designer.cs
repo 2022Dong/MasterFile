@@ -44,6 +44,9 @@
             label12 = new Label();
             label13 = new Label();
             label14 = new Label();
+            statusStrip1 = new StatusStrip();
+            stsMsg = new ToolStripStatusLabel();
+            statusStrip1.SuspendLayout();
             SuspendLayout();
             // 
             // label5
@@ -99,6 +102,7 @@
             txtStaffID.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
             txtStaffID.Location = new Point(41, 74);
             txtStaffID.Name = "txtStaffID";
+            txtStaffID.ReadOnly = true;
             txtStaffID.Size = new Size(175, 29);
             txtStaffID.TabIndex = 10;
             // 
@@ -188,9 +192,9 @@
             label13.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
             label13.Location = new Point(317, 274);
             label13.Name = "label13";
-            label13.Size = new Size(107, 21);
+            label13.Size = new Size(101, 21);
             label13.TabIndex = 23;
-            label13.Text = "Ctrl + S : Save";
+            label13.Text = "Alt + S : Save";
             // 
             // label14
             // 
@@ -202,11 +206,27 @@
             label14.TabIndex = 24;
             label14.Text = "Ctrl + Shift + C: Cancel";
             // 
+            // statusStrip1
+            // 
+            statusStrip1.Items.AddRange(new ToolStripItem[] { stsMsg });
+            statusStrip1.Location = new Point(0, 376);
+            statusStrip1.Name = "statusStrip1";
+            statusStrip1.Size = new Size(555, 22);
+            statusStrip1.TabIndex = 25;
+            statusStrip1.Text = "statusStrip1";
+            // 
+            // stsMsg
+            // 
+            stsMsg.Name = "stsMsg";
+            stsMsg.Size = new Size(84, 17);
+            stsMsg.Text = "Feedback info:";
+            // 
             // AdminForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(555, 398);
+            Controls.Add(statusStrip1);
             Controls.Add(label14);
             Controls.Add(label13);
             Controls.Add(label12);
@@ -223,8 +243,12 @@
             Controls.Add(label2);
             Controls.Add(txtStaffID);
             Controls.Add(label1);
+            KeyPreview = true;
             Name = "AdminForm";
             Text = "Admin";
+            KeyDown += AdminForm_KeyDown;
+            statusStrip1.ResumeLayout(false);
+            statusStrip1.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -247,5 +271,7 @@
         private Label label12;
         private Label label13;
         private Label label14;
+        private StatusStrip statusStrip1;
+        private ToolStripStatusLabel stsMsg;
     }
 }
