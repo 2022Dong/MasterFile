@@ -75,7 +75,7 @@ namespace MasterFile
 
                 if (name.ToLower().Contains(filterText))
                 {
-                    lbFilteredData.Items.Add($"[{id}, {name}]");
+                    lbFilteredData.Items.Add($"{id}, {name}");
                 }
             }
         }
@@ -93,7 +93,7 @@ namespace MasterFile
 
                 if (id.ToString().Contains(txtStaffID.Text))
                 {
-                    lbFilteredData.Items.Add($"[{id}, {name}]");
+                    lbFilteredData.Items.Add($"{id}, {name}");
                 }
             }
         }
@@ -109,7 +109,7 @@ namespace MasterFile
         //Q4.6.Create a method for the Staff Name text box which will clear the contents and place the focus into the Staff Name text box. Utilise a keyboard shortcut.
         private void txtStaffName_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.C && e.Control)
+            if (e.KeyCode == Keys.N && e.Alt)
             {
                 txtStaffName.Clear();
                 txtStaffName.Focus();
@@ -119,7 +119,7 @@ namespace MasterFile
         //Q4.7.Create a method for the Staff ID text box which will clear the contents and place the focus into the text box. Utilise a keyboard shortcut.
         private void txtStaffID_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.C && e.Control)
+            if (e.KeyCode == Keys.I && e.Alt)
             {
                 txtStaffID.Clear();
                 txtStaffID.Focus();
@@ -127,7 +127,48 @@ namespace MasterFile
         }
 
         //Q4.8.Create a method for the filtered and selectable list box which will populate the two text boxes when a staff record is selected.Utilise the Tab and keyboard keys.
+        private void lbFilteredData_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == (char)Keys.Tab)
+            {
+                e.Handled = true; // Prevent default tab behaviour
+                int currentIndex = lbFilteredData.SelectedIndex;
+                if (currentIndex < lbFilteredData.Items.Count - 1)
+                {
+                    lbFilteredData.SelectedIndex = currentIndex + 1;
+                }
+                else
+                {
+                    lbFilteredData.SelectedIndex = 0;
+                }
+            }
 
+            // populate selected data to textboxes
+            if (e.KeyChar == (char)Keys.Space && lbFilteredData.SelectedItem != null)
+            {
+                string selectedStaff = lbFilteredData.SelectedItem.ToString();
+
+                string[] parts = selectedStaff.Split(',');
+                if (parts.Length == 2) // split into 2 parts
+                {
+                    txtStaffID.Text = parts[0];
+                    txtStaffName.Text = parts[1];
+                }
+            }
+            //if (e.KeyChar == (char)Keys.Space)
+            //{
+            //    string selectedStaff = lbFilteredData.SelectedItem.ToString(); // null error
+            //    if (!string.IsNullOrEmpty(selectedStaff))
+            //    {
+            //        string[] parts = selectedStaff.Split(',');
+            //        if (parts.Length == 2) // split into 2 parts
+            //        {
+            //            txtStaffID.Text = parts[0];
+            //            txtStaffName.Text = parts[1];
+            //        }
+            //    }
+            //}
+        }
 
         //Q4.9.Create a method that will open the Admin GUI when the Alt + A keys are pressed.
         //Ensure the General GUI sends the currently selected Staff ID and Staff Name to the Admin GUI for Update and Delete purposes and is opened as modal.
