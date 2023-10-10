@@ -18,6 +18,7 @@ using System.Linq;
 // Name: Dongyun Huang
 // ID: 30042104
 // Date: 2/10/2023 - 27/11/2023
+
 namespace MasterFile
 {
     public partial class GeneralForm : Form
@@ -192,7 +193,7 @@ namespace MasterFile
                 if (result == DialogResult.OK)
                 {
                     // Reload or update data in the General GUI.
-                    DiaplaylbAllStaff();
+                    LoadExcelFile();
                     txtStaffID.Clear();
                     txtStaffName.Clear();
                 }
