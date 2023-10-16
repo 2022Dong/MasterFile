@@ -14,6 +14,7 @@ using System.Windows.Forms;
 using System.Xml.Linq;
 using System;
 using System.Linq;
+using System.Net.NetworkInformation;
 
 // Name: Dongyun Huang
 // ID: 30042104
@@ -190,17 +191,7 @@ namespace MasterFile
                 AdminForm adminGUI = new AdminForm(this, selectedStaffID, selectedStaffName);
 
                 // open as a modal
-                //adminGUI.Show();
                 DialogResult result = adminGUI.ShowDialog();
-
-                // Handle the result if needed (e.g., refresh data after editing).
-                if (result == DialogResult.OK)
-                {
-                    // Reload or update data in the General GUI.
-                    LoadExcelFile();
-                    txtStaffID.Clear();
-                    txtStaffName.Clear();
-                }
             }
         }
 

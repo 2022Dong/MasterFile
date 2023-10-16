@@ -73,40 +73,51 @@ namespace MasterFile
         {
             txtStaffID.Text = id;
             txtStaffName.Text = name;
+
+            if (string.IsNullOrEmpty(txtStaffID.Text))
+            {
+                Create();
+            }
         }
 
         //Q5.3.Create a method that will create a new Staff ID and input the staff name from the related text box.
         //The Staff ID must be unique starting with 77xxxxxxx while the staff name may be duplicated.
         //The new staff member must be added to the Dictionary data structure.
+        private void Create()
+        {
+            // Generate 7 random digits. 
+            Random random = new Random();
+            int rand = 0;
+            for (int i = 0; i < 7; i++)
+            {
+                rand = rand * 10 + random.Next(10); // 0 ~ 9
+            }
+            // Generate unique id starting w/ 77
+            int staffId = 770000000 + rand;
+
+            if (!GeneralForm.MasterFile.ContainsKey(staffId))
+            {
+                txtStaffID.Text = staffId.ToString();
+                txtStaffName.Text = "Default Name";
+                txtStaffName.Focus();
+
+
+                if (!string.IsNullOrEmpty(txtStaffName.Text))
+                {
+                    GeneralForm.MasterFile.Add(staffId, txtStaffName.Text);
+                }
+            }
+            else
+            {
+                txtStaffID.Focus();
+                stsMsg.Text = "Duplicate ID, Please press Alt + C, try again.";
+            }
+        }
         private void txtStaffID_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.C && e.Alt)
             {
-                // Generate 7 random digits. 
-                Random random = new Random();
-                int rand = 0;
-                for (int i = 0; i < 7; i++)
-                {
-                    rand = rand * 10 + random.Next(10); // 0 ~ 9
-                }
-                // Generate unique id starting w/ 77
-                int staffId = 770000000 + rand;
-
-                if (!GeneralForm.MasterFile.ContainsKey(staffId))
-                {
-                    txtStaffID.Text = staffId.ToString();
-
-
-                    if (!string.IsNullOrEmpty(txtStaffName.Text))
-                    {
-                        GeneralForm.MasterFile.Add(staffId, txtStaffName.Text);
-                    }
-                }
-                else
-                {
-                    txtStaffID.Clear();
-                    stsMsg.Text = "Press Alt + C, try again.";
-                }
+                Create();
             }
         }
 
@@ -192,7 +203,7 @@ namespace MasterFile
         {
             txtStaffID.Clear();
             txtStaffName.Clear();
-            stsMsg.Text = "Task is successful.";
+            stsMsg.Text = "Done (^_^)";
         }
 
         //Q5.9.Ensure all code is adequately commented.Map the programming criteria and features to your code/methods by adding comments above the method signatures.
