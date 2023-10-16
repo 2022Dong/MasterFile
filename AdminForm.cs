@@ -18,13 +18,12 @@ namespace MasterFile
 {
     public partial class AdminForm : Form
     {
-        private Dictionary<int, string> MasterFile;
-        public AdminForm(string id, string name, Dictionary<int, string> masterFile)
+        private GeneralForm formInstance; // need an instance to call the methods.
+        public AdminForm(GeneralForm form, string id, string name)
         {
             InitializeComponent();
 
-            MasterFile = masterFile; // 2 forms share same dictionary.
-
+            formInstance = form;
             PopulateSelectedData(id, name);
         }
 
@@ -93,14 +92,14 @@ namespace MasterFile
                 // Generate unique id starting w/ 77
                 int staffId = 770000000 + rand;
 
-                if (!MasterFile.ContainsKey(staffId))
+                if (!GeneralForm.MasterFile.ContainsKey(staffId))
                 {
                     txtStaffID.Text = staffId.ToString();
 
 
                     if (!string.IsNullOrEmpty(txtStaffName.Text))
                     {
-                        MasterFile.Add(staffId, txtStaffName.Text);
+                        GeneralForm.MasterFile.Add(staffId, txtStaffName.Text);
                     }
                 }
                 else
@@ -120,7 +119,7 @@ namespace MasterFile
             if (!string.IsNullOrEmpty(newName))
             {
                 // Update the name of the current Staff ID.
-                MasterFile[currentId] = newName;
+                GeneralForm.MasterFile[currentId] = newName; // add new
                 ClearTexbox();
             }
             else
@@ -139,7 +138,7 @@ namespace MasterFile
                 if (!string.IsNullOrEmpty(txtStaffID.Text))
                 {
                     int currentId = int.Parse(txtStaffID.Text);
-                    MasterFile.Remove(currentId);
+                    GeneralForm.MasterFile.Remove(currentId);
                     ClearTexbox();
                 }
                 else
@@ -160,7 +159,7 @@ namespace MasterFile
             string csvFilePath = "MalinStaffNamesV2.csv";
 
             // Create a CSV file with the updated data.
-            File.WriteAllLines(csvFilePath, MasterFile.Select(kvp => $"{kvp.Key},{kvp.Value}"));
+            File.WriteAllLines(csvFilePath, GeneralForm.MasterFile.Select(kvp => $"{kvp.Key},{kvp.Value}"));
 
             ClearTexbox();
         }
@@ -174,10 +173,13 @@ namespace MasterFile
             if (result == DialogResult.Yes)
             {
                 SaveToCSV();
+
+                // GeneralForm - after closing.
+                formInstance.DiaplaylbAllStaff();
+                formInstance.ClearTextBoxes();
             }
             else if (result == DialogResult.Cancel)
             {
-                // User canceled the close operation, do nothing
                 return;
             }
 

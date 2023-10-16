@@ -30,6 +30,8 @@ namespace MasterFile
             LoadExcelFile();
         }
 
+        //public static GeneralForm form = new GeneralForm();// create an instance for calling the method from AdminForm to refresh read only lb.
+
         //Q4.1.Create a Dictionary data structure with a TKey of type integer
         //and a TValue of type string, name the new data structure “MasterFile”.
         public static Dictionary<int, string> MasterFile = new Dictionary<int, string>();
@@ -37,13 +39,14 @@ namespace MasterFile
         //Q4.2.Create a method that will read the data from the.csv file into the Dictionary data structure when the GUI loads.
         private void LoadExcelFile()
         {
-            //MasterFile.Clear();
+            MasterFile.Clear();
+
             using (var reader = new StreamReader("MalinStaffNamesV2.csv"))
             {
                 string line;
                 while ((line = reader.ReadLine()) != null)
                 {
-                    string[] keyValue = line.Split(',');
+                    string[] keyValue = line.Split(',');                    
                     MasterFile.Add(int.Parse(keyValue[0]), keyValue[1]);
                 }
             }
@@ -51,7 +54,8 @@ namespace MasterFile
         }
 
         //Q4.3.Create a method to display the Dictionary data into a non-selectable display only list box (ie read only).
-        private void DiaplaylbAllStaff()
+        //private void DiaplaylbAllStaff()
+        public void DiaplaylbAllStaff()
         {
             lbAllStaff.Items.Clear();
 
@@ -183,7 +187,7 @@ namespace MasterFile
                 string selectedStaffName = txtStaffName.Text;
 
                 // pass data to admin form
-                AdminForm adminGUI = new AdminForm(selectedStaffID, selectedStaffName, MasterFile);
+                AdminForm adminGUI = new AdminForm(this, selectedStaffID, selectedStaffName);
 
                 // open as a modal
                 //adminGUI.Show();
@@ -202,6 +206,11 @@ namespace MasterFile
 
         //Q4.10.Add suitable error trapping and user feedback via a status strip or similar to ensure a fully functional User Experience.
         //Make all methods private and ensure the Dictionary is static and public.
+        public void ClearTextBoxes()
+        {
+            txtStaffID.Clear();
+            txtStaffName.Clear();
+        }
 
         //Q4.11.Ensure all code is adequately commented.Map the programming criteria and features to your code/methods by adding comments above the method signatures.
         //Ensure your code is compliant with the CITEMS coding standards (refer http://www.citems.com.au/).
