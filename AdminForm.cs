@@ -62,7 +62,7 @@ namespace MasterFile
                 watch.Stop();
                 var elapseTicks = watch.ElapsedTicks;
 
-                Trace.WriteLine($"Delete(): {elapseTicks} ticks;");                
+                Trace.WriteLine($"Delete(): {elapseTicks} ticks;");
             }
 
             // close
