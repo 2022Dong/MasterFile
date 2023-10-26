@@ -15,6 +15,8 @@ using System.Xml.Linq;
 using System;
 using System.Linq;
 using System.Net.NetworkInformation;
+using System.Diagnostics;
+using Application = System.Windows.Forms.Application;
 
 // Name: Dongyun Huang
 // ID: 30042104
@@ -31,7 +33,10 @@ namespace MasterFile
             LoadExcelFile();
         }
 
-        //public static GeneralForm form = new GeneralForm();// create an instance for calling the method from AdminForm to refresh read only lb.
+        // Create a trace file
+        TextWriterTraceListener myTraceListener = new TextWriterTraceListener("TraceFile.txt", "myTraceListener");
+
+        //public static GeneralForm form = new GeneralForm();// create an instance for calling the method from AdminForm to refresh read-only lb.
 
         //Q4.1.Create a Dictionary data structure with a TKey of type integer
         //and a TValue of type string, name the new data structure “MasterFile”.
@@ -40,18 +45,26 @@ namespace MasterFile
         //Q4.2.Create a method that will read the data from the.csv file into the Dictionary data structure when the GUI loads.
         private void LoadExcelFile()
         {
+            Trace.Listeners.Add(myTraceListener);
+
             MasterFile.Clear();
 
+            var watch = Stopwatch.StartNew();
             using (var reader = new StreamReader("MalinStaffNamesV2.csv"))
             {
                 string line;
                 while ((line = reader.ReadLine()) != null)
                 {
-                    string[] keyValue = line.Split(',');                    
+                    string[] keyValue = line.Split(',');
                     MasterFile.Add(int.Parse(keyValue[0]), keyValue[1]);
                 }
             }
             DiaplaylbAllStaff();
+            watch.Stop();
+            //var elapseMs = watch.ElapsedMilliseconds; // 0.001 seconds
+            var elapseTicks = watch.ElapsedTicks; // 0.0000001 seconds
+
+            Trace.WriteLine($"LoadExcelFile(): {elapseTicks} ticks;");
         }
 
         //Q4.3.Create a method to display the Dictionary data into a non-selectable display only list box (ie read only).
@@ -202,6 +215,22 @@ namespace MasterFile
             txtStaffID.Clear();
             txtStaffName.Clear();
         }
+
+        // Tracing doc.
+        private void GeneralForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            // Save trace file dialog
+            using (SaveFileDialog saveFileDialog = new SaveFileDialog())
+            {
+                saveFileDialog.InitialDirectory = Application.StartupPath;
+                saveFileDialog.Title = "Save your test file";
+                DialogResult sf = saveFileDialog.ShowDialog();
+
+                // Must close  <- no USING keyword
+                Trace.Close();
+            }
+        }
+
 
         //Q4.11.Ensure all code is adequately commented.Map the programming criteria and features to your code/methods by adding comments above the method signatures.
         //Ensure your code is compliant with the CITEMS coding standards (refer http://www.citems.com.au/).
