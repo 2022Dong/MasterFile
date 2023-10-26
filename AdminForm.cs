@@ -13,6 +13,7 @@ using static System.Net.Mime.MediaTypeNames;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 using System.Xml.Linq;
 using System.Xml;
+using System.Diagnostics;
 
 namespace MasterFile
 {
@@ -35,26 +36,34 @@ namespace MasterFile
             //{
             //    Create();
             //}
+
             // update
             if (e.KeyCode == Keys.U && e.Alt)
             {
+                //Trace.Listeners.Add(myTraceListener);
                 stsMsg.Text = "";
+
+                var watch = Stopwatch.StartNew();
                 Update();
+                watch.Stop();
+                var elapseTicks = watch.ElapsedTicks;
+
+                Trace.WriteLine($"Update(): {elapseTicks} ticks;");
             }
 
             // remove
             else if (e.KeyCode == Keys.D && e.Alt)
             {
+                //Trace.Listeners.Add(myTraceListener);
                 stsMsg.Text = "";
-                Delete();
-            }
 
-            //// save
-            //else if (e.KeyCode == Keys.S && e.Alt)
-            //{
-            //    stsMsg.Text = "";
-            //    SaveToCSV();
-            //}
+                var watch = Stopwatch.StartNew();
+                Delete();
+                watch.Stop();
+                var elapseTicks = watch.ElapsedTicks;
+
+                Trace.WriteLine($"Delete(): {elapseTicks} ticks;");                
+            }
 
             // close
             else if (e.KeyCode == Keys.L && e.Alt)
@@ -76,7 +85,14 @@ namespace MasterFile
 
             if (string.IsNullOrEmpty(txtStaffID.Text))
             {
+                //Trace.Listeners.Add(myTraceListener);
+
+                var watch = Stopwatch.StartNew();
                 Create();
+                watch.Stop();
+                var elapseTicks = watch.ElapsedTicks;
+
+                Trace.WriteLine($"Create(): {elapseTicks} ticks;");
             }
         }
 
@@ -143,7 +159,7 @@ namespace MasterFile
         private void Delete()
         {
             // Prompt to delete.
-            DialogResult result = MessageBox.Show("Do you want to delete the record?", "Confirm Delete", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            DialogResult result = MessageBox.Show("Delete?", "Confirm Delete", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (result == DialogResult.Yes)
             {
                 if (!string.IsNullOrEmpty(txtStaffID.Text))
@@ -154,7 +170,7 @@ namespace MasterFile
                 }
                 else
                 {
-                    stsMsg.Text = "Need a selected record.";
+                    stsMsg.Text = "Need a selected record from the General form...";
                 }
             }
             else if (result == DialogResult.No)
@@ -179,14 +195,15 @@ namespace MasterFile
         private void CloseAdminForm()
         {
             // Prompt to save before closing.
-            DialogResult result = MessageBox.Show("Do you want to save changes before closing?", "Confirm Close", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+            DialogResult result = MessageBox.Show("Save the change?", "Confirm Close", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
 
             if (result == DialogResult.Yes)
             {
                 SaveToCSV();
 
                 // GeneralForm - after closing.
-                formInstance.DiaplaylbAllStaff();
+                //formInstance.DiaplaylbAllStaff();
+                formInstance.LoadExcelFile();
                 formInstance.ClearTextBoxes();
             }
             else if (result == DialogResult.Cancel)

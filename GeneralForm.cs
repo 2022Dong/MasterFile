@@ -43,7 +43,7 @@ namespace MasterFile
         public static Dictionary<int, string> MasterFile = new Dictionary<int, string>();
 
         //Q4.2.Create a method that will read the data from the.csv file into the Dictionary data structure when the GUI loads.
-        private void LoadExcelFile()
+        public void LoadExcelFile()
         {
             Trace.Listeners.Add(myTraceListener);
 
@@ -69,7 +69,7 @@ namespace MasterFile
 
         //Q4.3.Create a method to display the Dictionary data into a non-selectable display only list box (ie read only).
         //private void DiaplaylbAllStaff()
-        public void DiaplaylbAllStaff()
+        private void DiaplaylbAllStaff()
         {
             lbAllStaff.Items.Clear();
 
@@ -171,7 +171,7 @@ namespace MasterFile
                 if (parts.Length == 2) // split into 2 parts
                 {
                     txtStaffID.Text = parts[0];
-                    txtStaffName.Text = parts[1];
+                    txtStaffName.Text = parts[1].Trim();
                 }
             }
             //if (e.KeyChar == (char)Keys.Space)
@@ -220,15 +220,15 @@ namespace MasterFile
         private void GeneralForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             // Save trace file dialog
-            using (SaveFileDialog saveFileDialog = new SaveFileDialog())
-            {
-                saveFileDialog.InitialDirectory = Application.StartupPath;
-                saveFileDialog.Title = "Save your test file";
-                DialogResult sf = saveFileDialog.ShowDialog();
+            //using (SaveFileDialog saveFileDialog = new SaveFileDialog())
+            //{
+            //    saveFileDialog.InitialDirectory = Application.StartupPath;
+            //    saveFileDialog.Title = "Save your test file";
+            //    DialogResult sf = saveFileDialog.ShowDialog();
 
                 // Must close  <- no USING keyword
                 Trace.Close();
-            }
+            //}
         }
 
 
