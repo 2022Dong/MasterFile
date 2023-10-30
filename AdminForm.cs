@@ -194,22 +194,11 @@ namespace MasterFile
         //Q5.7.Create a method that will close the Admin GUI when the Alt + L keys are pressed.
         private void CloseAdminForm()
         {
-            // Prompt to save before closing.
-            DialogResult result = MessageBox.Show("Save the change?", "Confirm Close", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+            SaveToCSV();
 
-            if (result == DialogResult.Yes)
-            {
-                SaveToCSV();
-
-                // GeneralForm - after closing.
-                //formInstance.DiaplaylbAllStaff();
-                formInstance.LoadExcelFile();
-                formInstance.ClearTextBoxes();
-            }
-            else if (result == DialogResult.Cancel)
-            {
-                return;
-            }
+            // GeneralForm - after closing.
+            formInstance.LoadExcelFile(); // formInstance.DiaplaylbAllStaff();
+            formInstance.ClearTextBoxes();
 
             Close();
         }
@@ -220,7 +209,7 @@ namespace MasterFile
         {
             txtStaffID.Clear();
             txtStaffName.Clear();
-            stsMsg.Text = "Done (^_^)";
+            stsMsg.Text = "Task done (^_^)";
         }
 
         //Q5.9.Ensure all code is adequately commented.Map the programming criteria and features to your code/methods by adding comments above the method signatures.
