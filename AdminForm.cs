@@ -68,7 +68,12 @@ namespace MasterFile
             // close
             else if (e.KeyCode == Keys.L && e.Alt)
             {
+                var watch = Stopwatch.StartNew();
                 CloseAdminForm();
+                watch.Stop();
+                var elapseTicks = watch.ElapsedTicks;
+
+                Trace.WriteLine($"SaveExcelFile(): {elapseTicks} ticks;");
             }
         }
         #endregion
@@ -114,7 +119,7 @@ namespace MasterFile
             if (!GeneralForm.MasterFile.ContainsKey(staffId))
             {
                 txtStaffID.Text = staffId.ToString();
-                txtStaffName.Text = "Default Name";
+                txtStaffName.Text = "";
                 txtStaffName.Focus();
 
 
