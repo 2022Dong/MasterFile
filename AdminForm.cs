@@ -130,8 +130,7 @@ namespace MasterFile
             }
             else
             {
-                txtStaffID.Focus();
-                stsMsg.Text = "Duplicate ID, Please press Alt + C, try again.";
+                stsMsg.Text = "Duplicate ID, Please reopen admin form try again.";
             }
         }
         private void txtStaffID_KeyDown(object sender, KeyEventArgs e)
@@ -163,25 +162,15 @@ namespace MasterFile
         //Q5.5.Create a method that will Remove the current Staff ID and clear the text boxes.
         private void Delete()
         {
-            // Prompt to delete.
-            DialogResult result = MessageBox.Show("Delete?", "Confirm Delete", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-            if (result == DialogResult.Yes)
+            if (!string.IsNullOrEmpty(txtStaffID.Text))
             {
-                if (!string.IsNullOrEmpty(txtStaffID.Text))
-                {
-                    int currentId = int.Parse(txtStaffID.Text);
-                    GeneralForm.MasterFile.Remove(currentId);
-                    ClearTexbox();
-                }
-                else
-                {
-                    stsMsg.Text = "Need a selected record from the General form...";
-                }
+                int currentId = int.Parse(txtStaffID.Text);
+                GeneralForm.MasterFile.Remove(currentId);
+                ClearTexbox();
             }
-            else if (result == DialogResult.No)
+            else
             {
-                // User canceled the close operation, do nothing
-                return;
+                stsMsg.Text = "Need a selected record from the General form...";
             }
         }
 

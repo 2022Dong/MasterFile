@@ -20,7 +20,7 @@ using Application = System.Windows.Forms.Application;
 
 // Name: Dongyun Huang
 // ID: 30042104
-// Date: 2/10/2023 - 27/11/2023
+// Date: 2/10/2023 - 30/10/2023
 
 namespace MasterFile
 {
@@ -48,7 +48,7 @@ namespace MasterFile
         }
 
         // Create a trace file
-        TextWriterTraceListener myTraceListener = new TextWriterTraceListener("TraceFile.txt", "myTraceListener");
+        TextWriterTraceListener myTraceListener = new TextWriterTraceListener("DictionaryTraceFile.txt", "myTraceListener");
 
         //public static GeneralForm form = new GeneralForm();// create an instance for calling the method from AdminForm to refresh read-only lb.
 
