@@ -211,7 +211,6 @@
             Name = "GeneralForm";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "General";
-            FormClosing += GeneralForm_FormClosing;
             KeyDown += GeneralForm_KeyDown;
             statusStrip1.ResumeLayout(false);
             statusStrip1.PerformLayout();
